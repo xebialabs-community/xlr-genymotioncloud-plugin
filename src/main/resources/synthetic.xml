@@ -1,0 +1,24 @@
+<synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.xebialabs.com/deployit/synthetic"
+       xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+
+  <type type="GenymotionCloud.Account" extends="configuration.HttpConnection">
+        <property name="license_key" category="input" kind="string" description="Specify Genymotion Cloud License Key."/>
+    </type>
+  
+  <type type="GenymotionCloud.Task" extends="xlrelease.PythonScript" virtual="true">
+        <property name="taskColor" hidden="true" default="#e6195e" />
+        <property name="GenymotionCloudAccount" category="input" label="Genymotion Account" referenced-type="GenymotionCloud.Account" kind="ci"/>
+    </type>
+
+  <type type="genymotionCloud.StartDevices" label="Start Genymotion Cloud device" extends="GenymotionCloud.Task">
+    <property name="template_name" category="input" description="Specify Genymotion Cloud template name."/>
+    <property name="device_name" category="input" description="Specify the device name."/>
+    <property name="adb_serial_port" category="input" required="false" description="Specify adb port to use."/>
+  </type>
+
+  <type type="genymotionCloud.StopDevices"  label="Stop Genymotion Cloud device" extends="xlrelease.PythonScript">
+    <property name="taskColor" hidden="true" default="#e6195e" />
+    <property name="device_name" category="input" description="Specify the device name."/>
+  </type>
+</synthetic>

@@ -1,0 +1,6 @@
+# use glob syntax.
+syntax: glob
+.gradle/
+out/
+build/
+.DS_Store
