@@ -5,118 +5,55 @@
 ## Overview
 Genymotion Cloud plugin for XL release allows the users to launch Android virtual devices in <a href="https://www.genymotion.com/cloud/">Genymotion Cloud Platform</a>.
 
+## Pre requisites
+<a href="https://www.genymotion.com/desktop/">Genymotion Desktop</a> with Entreprise License must be installed on the same server. For now, it's **mandatory** to add `gmtool` in the PATH.
+
 ## Installation
 
 1. Download Genymotion Cloud plugin from the [release folder](../../releases).
 2. Please refer to [How to install an XL Release plugin](https://docs.xebialabs.com/xl-release/how-to/install-or-remove-xl-release-plugins.html)
 
+## Configuration
+This configuration allows you to configure multiple Genymotion Account or just one.
+Before to use Genymotion Cloud start devices task, it's needed to setup a Genymotion Cloud server definition within the following information:
+
+- **Title:** Name of the Genymotion Cloud Account
+- **Url:** Fill with <a href="https://cloud.geny.io">https://cloud.geny.io</a>
+- **Username:** Fill your Genymotion Cloud Account email.
+- **Password:** Fill your Genymotion Cloud Account password
+- **License_key:** Fill your Genymotion Cloud Account license key
+
+![](images/shared_configuration.png)
+
 ## Tasks
 The plugin has 2 different tasks.
+
 #### Start devices
-Launch Test task allows the user to trigger a NeoLoad loading test on a remote machine (Windows, Linux, Mac OS). This task supports all the different ways to store NeoLoad projects:
-<ul>
-    <li>On a Neotys Team Server</li>
-    <li>On a source control (SVN)</li>
-    <li>Locally</li>
-</ul>
-This task is also compatible with the usage of the new NeoLoad Web platform.
+Start Devices task allows the user to start an Android device in Genymotion Cloud. 
 
-Note: If the user has a NeoLoad Web subscription, the plugin will stream the data to the user's NeoLoad Web account (SaaS or On-Premises).
+![](images/start_devices.png)
 
-The task is failing when the SLAs of the test are not met.
+This task takes 4 parameters: 
 
-The Launch Test task stores 3 report files: report.xml (required for the Trending Tile and Custom Trending Tile), report.pdf and junit.xml.
+* **Genymotion Account**: It's the Genymotion account configured in Settigs/Shared configuration
+* **Template name**: Set the template name you want to use. You can retrieve the list of available template in <a href="https://cloud.geny.io">Genymotion Cloud Platform</a>.
+* **Device name**: Set the device name you want to start.
+* **Adb serial port** :  Set the connection on a specific port, with a port comprised between 1024 and 65535. 
+
+This task will use gmtool in order to start device in Genymotion Cloud and the device will be connected with adb on the server. 
 
 #### Stop Devices
-The Update Variable task allows the user to rewrite the runtime context of a test. The main idea behind this task is to update the project used by the "Launch Test" task by updating the reference of the System under test.
+Stop Devices task allows the user to stop an Android device in Genymotion Cloud.
 
-If the XL release user is deploying the application on a new environment, he will be able to pass the definition of the environment to NeoLoad through the Update Variable task.
+![](images/stop_devices.png)
 
-## Configurations
-The plugin has 5 different configurations.
+This task takes 1 parameter: 
 
-#### NeoLoad Controller
-This configuration specifies where NeoLoad Controller is installed and how to access it.</p>
-<ul>
-    <li>Supported operation systems: Linux, Windows (Telnet), Windows (WinRM), Mac OS.<br>
-        Please refer to <a href="https://docs.xebialabs.com/xl-platform/concept/remoting-plugin.html">Xebia remoting plugin</a> and <a href="https://docs.xebialabs.com/xl-deploy/4.5.x/remotingPluginManual.html">Xebia remoting plugin manual</a> in order to correcly configure the NeoLoad Controller machine.</li>
-    <li>Hostname or IP address of the machine where NeoLoad Controller is installed</li>
-    <li>NeoLoad installation path in the machine</li>
-    <li>Username to accces to the NeoLoad Controller machine</li>
-    <li>Password to access to the NeoLoad Controller machine</li>
-</ul>
-Here is an example of NeoLoad Controller configuration:
+* **Device name**: Set the device name you want to stop.
 
-<p align="center"><a target="_blank" href="screenshots/NeoLoadControllerConfiguration.PNG"><img src="screenshots/NeoLoadControllerConfiguration.PNG" alt="NeoLoad Controller Configuration" style="max-width:100%;"></a></p>
-
-#### Neotys Team Server
-This configuration specifies Neotys Team Server that allows leasing a NeoLoad license and check out a NTS collaboration project.
-<ul>
-    <li>Neotys Team Server Url</li>
-    <li>Username to accces to Neotys Team Server</li>
-    <li>Password to access to Neotys Team Server</li>
-    <li>License identifier that NeoLoad Controller will lease when launching a test</li>
-</ul>
-Here is an example of Neotys Team Server configuration:
-<p align="center"><a target="_blank" href="screenshots/NeotysTeamServerConfiguration.PNG"><img src="screenshots/NeotysTeamServerConfiguration.PNG" alt="Neotys Team Server Configuration" style="max-width:100%;"></a></p>
-
-#### NeoLoad Web
-This configuration allows sending the launched test to NeoLoad Web SaaS or On-Premises.
-<ul>
-    <li>NeoLoad Web Api Url</li>
-    <li>NeoLoad Web Api Token</li>
-</ul>
-Here is an example of NeoLoad Web configuration:
-<p align="center"><a target="_blank" href="screenshots/NeoLoadWebConfiguration.PNG"><img src="screenshots/NeoLoadWebConfiguration.PNG" alt="NeoLoad Web Configuration" style="max-width:100%;"></a></p>
-
-#### NeoLoad Collaboration</h4>
-This configuration specifies the SVN third-party collaboration that is used to check out a NeoLoad project.
-<ul>
-    <li>SVN Server Url</li>
-    <li>Username to accces to SVN Server</li>
-    <li>Password to access to SVN Server</li>
-</ul>
-
-#### NeoLoad Cloud
-This configuration specifies the credentials to access Neotys Cloud Platform. This configuration is used for Cloud Session Task.
-<ul>
-    <li>Username to accces to Neotys Cloud Platform</li>
-    <li>Password to access to Neotys Cloud Platform</li>
-</ul>
-
-## NeoLoad Release
-Here is an example of NeoLoad Release:
-<p align="center"><a target="_blank" href="screenshots/NeoLoadRelease.PNG"><img src="screenshots/NeoLoadRelease.PNG" alt="NeoLoad Release" style="max-width:100%;"></a></p>
-
-
-## Custom Tiles
-The plugin comes with 2 custom tiles.</p>
-
-#### NeoLoad Trending Graph
-The user can add to the release dashboard a tile that will trend all the launched tests (having a specific name) on following KPIs:
-<ul>
-    <li>Average response time</li>
-    <li>Errors</li>
-    <li>Hit/s</li>
-</ul>
-Here is an example of NeoLoad Trending Graph:
-<p align="center"><a target="_blank" href="screenshots/NeoLoadTrendingGraph.PNG"><img src="screenshots/NeoLoadTrendingGraph.PNG" alt="NeoLoad Trending Graph" style="max-width:100%;"></a></p>
-
-#### NeoLoad Custom Trending Graph
-The user can trend any metrics exposed in NeoLoad report.xml.
-
-The user will specify the XPath query required to collect the KPI from NeoLoad report.xml.
-
-## Installation
-Download NeoLoad plugin in <a href="release">release folder</a>.
-
-Please refer to <a href="https://docs.xebialabs.com/xl-release/how-to/install-or-remove-xl-release-plugins.html">How to install an XL Release plugin</a>
-
-## Copyright
-<a href="copyright.txt">See here</a>
 
 ## References
 
-* <a href="https://www.neotys.com/neoload/overview">NeoLoad</a>
-* <a href="https://neoload.saas.neotys.com/">NeoLoad Web</a>
-* <a href="https://www.neotys.com/solutions/cloud-load-testing">Neotys Cloud Platform</a>
+* <a href="https://www.genymotion.com/">Genymotion</a>
+* <a href="https://www.genymotion.com/cloud/">Genymotion Cloud</a>
+* <a href="https://cloud.geny.io">Genymotion Cloud Platform</a>
